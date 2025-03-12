@@ -1,0 +1,31 @@
+{
+  "name": "inventory-backend",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/IsabellaS2/inventory-backend#readme",
+  "bugs": {
+    "url": "https://github.com/IsabellaS2/inventory-backend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsabellaS2/inventory-backend.git"
+  },
+  "license": "ISC",
+  "author": "Isabella Sulisufi <isabella.sulisufi@clearscore.com>",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "5.1.1",
+    "bcryptjs": "3.0.2",
+    "body-parser": "1.20.3",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "jsonwebtoken": "9.0.2",
+    "pg": "8.13.3",
+    "sequelize": "6.37.6"
+  }
+}
