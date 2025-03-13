@@ -1,10 +1,11 @@
 import express from "express";
 import Product from "../database/product.js";
+import authenticateToken from "../middleware/authenticate-token.js";
 
 const router = express.Router();
 
 // Get all products
-router.get("/products", async (req, res) => {
+router.get("/products", authenticateToken, async (req, res) => {
   try {
     const products = await Product.findAll();
     res.json(products);
@@ -14,12 +15,13 @@ router.get("/products", async (req, res) => {
   }
 });
 
-// Gget a product by its ID
+
+// Get a product by its ID
 router.get("/products/:id", async (req, res) => {
    const { id } = req.params;
  
    try {
-     const product = await Product.findByPk(id); // Find product by primary key (ID)
+     const product = await Product.findByPk(id); 
  
      if (!product) {
        return res.status(404).json({ message: "Product not found" });
