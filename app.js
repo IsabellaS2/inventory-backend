@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import cors from "cors";
 import productRoutes from "./routes/product.js";
+import userRoutes from "./routes/user.js";
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ app.use(
  );
 
 app.use("/", productRoutes);
-
+app.use("/", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the Product API!");

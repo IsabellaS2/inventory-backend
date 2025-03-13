@@ -1,63 +1,65 @@
-// import { Sequelize, DataTypes } from "sequelize";
-// import dotenv from "dotenv";
+import { Sequelize, DataTypes } from "sequelize";
+import dotenv from "dotenv";
 
-// dotenv.config();
+dotenv.config();
 
-// const sequelize = new Sequelize(process.env.DB_URL, {
-//   dialect: "postgres",
-//   protocol: "postgres",
-//   dialectOptions: {
-//     ssl: {
-//       require: true,
-//       rejectUnauthorized: false,
-//     },
-//   },
-//   logging: false,
-// });
+const sequelize = new Sequelize(process.env.DB_URL, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+  logging: false,
+});
 
-// const User = sequelize.define("User", {
-//    id: {
-//      type: DataTypes.INTEGER,
-//      primaryKey: true,
-//      autoIncrement: true,
-//    },
-//    name: {
-//      type: DataTypes.STRING,
-//      allowNull: false,
-//    },
-//    price: {
-//      type: DataTypes.FLOAT,
-//      allowNull: false,
-//    },
-//    quantity: {
-//      type: DataTypes.INTEGER,
-//      allowNull: false,
-//    },
-//    description: {
-//      type: DataTypes.TEXT,
-//      allowNull: true,
-//    },
-//    createdAt: {
-//      type: DataTypes.DATE,
-//      allowNull: false,
-//      field: "createdat", 
-//    },
-//    updatedAt: {
-//      type: DataTypes.DATE,
-//      allowNull: false,
-//      field: "updatedat", 
-//    },
-//  }, {
-//    tableName: "Userd", 
-//    timestamps: true, 
-//  });
+const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true,
+      },
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: DataTypes.ENUM("user", "manager", "admin"),
+      defaultValue: "user",
+    },
+  },
+  {
+    tableName: "Users",
+    timestamps: true,
+  }
+);
 
-// sequelize
-//   .sync()
-//   .then(() => {
-//     console.log(`Product table created or already exists.`);
-//     console.log(`Table name is: ${Product.getTableName()}`);
-//   })
-//   .catch((err) => console.log("Error syncing database:", err));
+sequelize
+  .sync()
+  .then(() => {
+    console.log(`User table created or already exists.`);
+    console.log(`Table name is: ${User.getTableName()}`);
+  })
+  .catch((err) => console.error("Error syncing User model:", err));
 
-// export default User;
+export default User;
