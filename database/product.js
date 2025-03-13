@@ -15,42 +15,46 @@ const sequelize = new Sequelize(process.env.DB_URL, {
   logging: false,
 });
 
-const Product = sequelize.define("Product", {
-   id: {
-     type: DataTypes.INTEGER,
-     primaryKey: true,
-     autoIncrement: true,
-   },
-   name: {
-     type: DataTypes.STRING,
-     allowNull: false,
-   },
-   price: {
-     type: DataTypes.FLOAT,
-     allowNull: false,
-   },
-   quantity: {
-     type: DataTypes.INTEGER,
-     allowNull: false,
-   },
-   description: {
-     type: DataTypes.TEXT,
-     allowNull: true,
-   },
-   createdAt: {
-     type: DataTypes.DATE,
-     allowNull: false,
-     field: "createdat", 
-   },
-   updatedAt: {
-     type: DataTypes.DATE,
-     allowNull: false,
-     field: "updatedat", 
-   },
- }, {
-   tableName: "Products", 
-   timestamps: true, 
- });
+const Product = sequelize.define(
+  "Product",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: "createdat",
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      field: "updatedat",
+    },
+  },
+  {
+    tableName: "Products",
+    timestamps: true,
+  }
+);
 
 sequelize
   .sync()
