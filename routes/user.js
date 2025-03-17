@@ -4,6 +4,7 @@ import validator from "validator";
 import jwt from "jsonwebtoken";
 import User from "../database/user.js";
 import authenticateToken from "../middleware/authenticate-token.js";
+import authenticateAdmin from "../middleware/access-control.js";
 
 const router = express.Router();
 
@@ -132,6 +133,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/logout", authenticateToken, (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully.",
+  });
+});
+
 router.get("/profile", authenticateToken, async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id, {
@@ -152,11 +160,40 @@ router.get("/profile", authenticateToken, async (req, res) => {
   }
 });
 
-router.post("/logout", authenticateToken, (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: "Logged out successfully.",
-  });
+router.get("/users", authenticateAdmin, async (req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'createdAt'],
+    });
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Error retrieving users.", error: error.message });
+  }
 });
+
+
+router.put('/users/:id/role', authenticateAdmin, async (req, res) => {
+  const { id } = req.params;
+  const { role } = req.body;
+
+  if (!['user', 'manager', 'admin'].includes(role)) {
+    return res.status(400).json({ message: "Invalid role" });
+  }
+
+  try {
+    const user = await User.findByPk(id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.role = role; 
+    await user.save();
+
+    res.status(200).json({ message: `User role updated to ${role}` });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating user role", error: error.message });
+  }
+})
+
 
 export default router;

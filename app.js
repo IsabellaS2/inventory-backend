@@ -1,4 +1,3 @@
-// app.js
 import express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
@@ -30,3 +29,5 @@ app.get("/", (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Server running on port ${port}`);
 });
+
+export default app;
