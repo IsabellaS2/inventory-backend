@@ -54,12 +54,15 @@ const User = sequelize.define(
   }
 );
 
-sequelize
-  .sync()
-  .then(() => {
-    console.log(`User table created or already exists.`);
-    console.log(`Table name is: ${User.getTableName()}`);
-  })
-  .catch((err) => console.error("Error syncing User model:", err));
+if (process.env.NODE_ENV !== "test") {
+  sequelize
+    .sync()
+    .then(() => {
+      console.log(`User table created or already exists.`);
+      console.log(`Table name is: ${User.getTableName()}`);
+    })
+    .catch((err) => console.error("Error syncing User model:", err));
+}
 
 export default User;
+export { sequelize }; 
