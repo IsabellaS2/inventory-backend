@@ -56,12 +56,15 @@ const Product = sequelize.define(
   }
 );
 
-sequelize
-  .sync()
-  .then(() => {
-    console.log(`Product table created or already exists.`);
-    console.log(`Table name is: ${Product.getTableName()}`);
-  })
-  .catch((err) => console.log("Error syncing database:", err));
+if (process.env.NODE_ENV !== "test") {
+  sequelize
+    .sync()
+    .then(() => {
+      console.log(`Product table created or already exists.`);
+      console.log(`Table name is: ${Product.getTableName()}`);
+    })
+    .catch((err) => console.error("Error syncing Product model:", err));
+}
 
 export default Product;
+export { sequelize };
