@@ -13,11 +13,16 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(
-   cors({
-     origin: ["http://localhost:3000"],
-     methods: ["GET", "POST", "PUT", "DELETE"],
-   })
- );
+  cors({
+    origin: [
+      "http://localhost:3000", // For local development
+      "https://inventory-frontend-rj3w.onrender.com", // For production
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
 
 app.use("/", productRoutes);
 app.use("/", userRoutes);
