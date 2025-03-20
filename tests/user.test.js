@@ -4,6 +4,9 @@ import jwt from "jsonwebtoken";
 import app from "../app.js";
 import { sequelize } from "../database/user.js";
 import User from "../database/user.js";
+import userRoutes from "../routes/user.js"
+
+app.use("/", userRoutes);
 
 const generateToken = (user) =>
   jwt.sign(
