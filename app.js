@@ -7,6 +7,7 @@ import userRoutes from "./routes/user.js";
 
 dotenv.config();
 
+const port = process.env.PORT || 3000;
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,5 +30,10 @@ app.use("/", userRoutes);
 app.get("/", (req, res) => {
   res.send("Welcome to the Product API!");
 });
+
+app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+});
+
 
 export default app;
