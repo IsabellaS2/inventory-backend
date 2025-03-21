@@ -163,20 +163,21 @@ router.get("/profile", authenticateToken, async (req, res) => {
 router.get("/users", authenticateAdmin, async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'firstName', 'lastName', 'email', 'role', 'createdAt'],
+      attributes: ["id", "firstName", "lastName", "email", "role", "createdAt"],
     });
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error retrieving users.", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error retrieving users.", error: error.message });
   }
 });
 
-
-router.put('/users/:id/role', authenticateAdmin, async (req, res) => {
+router.put("/users/:id/role", authenticateAdmin, async (req, res) => {
   const { id } = req.params;
   const { role } = req.body;
 
-  if (!['user', 'manager', 'admin'].includes(role)) {
+  if (!["user", "manager", "admin"].includes(role)) {
     return res.status(400).json({ message: "Invalid role" });
   }
 
@@ -186,14 +187,15 @@ router.put('/users/:id/role', authenticateAdmin, async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    user.role = role; 
+    user.role = role;
     await user.save();
 
     res.status(200).json({ message: `User role updated to ${role}` });
   } catch (error) {
-    res.status(500).json({ message: "Error updating user role", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Error updating user role", error: error.message });
   }
-})
-
+});
 
 export default router;

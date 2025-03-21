@@ -12,7 +12,7 @@ function authenticateAdmin(req, res, next) {
       return res.status(403).json({ message: "Unauthorized: Admins only" });
     }
 
-    req.user = user; 
+    req.user = user;
     next();
   });
 }
