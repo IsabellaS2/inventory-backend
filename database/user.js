@@ -65,4 +65,4 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 export default User;
-export { sequelize }; 
+export { sequelize };

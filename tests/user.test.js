@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import app from "../app.js";
 import { sequelize } from "../database/user.js";
 import User from "../database/user.js";
-import userRoutes from "../routes/user.js"
+import userRoutes from "../routes/user.js";
 
 app.use("/", userRoutes);
 
@@ -13,7 +13,7 @@ const generateToken = (user) =>
     { id: user.id, email: user.email, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
-);
+  );
 
 let adminToken;
 let userToken;
